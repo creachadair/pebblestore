@@ -64,7 +64,7 @@ func (s *Store) Close() error {
 func (s *Store) Get(_ context.Context, key string) (data []byte, err error) {
 	val, c, err := s.db.Get([]byte(key))
 	if err == pebble.ErrNotFound {
-		return nil, blob.ErrKeyNotFound
+		return nil, blob.KeyNotFound(key)
 	} else if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func (s *Store) Put(_ context.Context, opts blob.PutOptions) error {
 		_, c, err := s.db.Get(key)
 		if err == nil {
 			c.Close()
-			return blob.ErrKeyExists
+			return blob.KeyExists(opts.Key)
 		}
 		// fall through
 	}
