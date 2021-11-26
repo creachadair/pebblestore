@@ -3,16 +3,16 @@ module github.com/creachadair/pebblestore
 go 1.17
 
 require (
-	github.com/DataDog/zstd v1.4.8 // indirect
+	github.com/DataDog/zstd v1.5.0 // indirect
 	github.com/cockroachdb/errors v1.8.6 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20211122174643-50e31f60d633
+	github.com/cockroachdb/pebble v0.0.0-20211125005712-9791c0f4c052
 	github.com/cockroachdb/redact v1.1.3 // indirect
-	github.com/creachadair/ffs v0.0.0-20211120163038-8cd273df7281
+	github.com/creachadair/ffs v0.0.0-20211123163149-51c29036e6df
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	golang.org/x/exp v0.0.0-20211123021643-48cbe7f80d7c // indirect
-	golang.org/x/sys v0.0.0-20211117180635-dee7805ff2e1 // indirect
+	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881 // indirect
 )
 
 require (
