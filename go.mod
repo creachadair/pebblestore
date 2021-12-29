@@ -5,14 +5,14 @@ go 1.17
 require (
 	github.com/DataDog/zstd v1.5.0 // indirect
 	github.com/cockroachdb/errors v1.8.6 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20211207171803-218cfbf8fe7b
+	github.com/cockroachdb/pebble v0.0.0-20211222161641-06e42cfa82c0
 	github.com/cockroachdb/redact v1.1.3 // indirect
 	github.com/creachadair/ffs v0.0.0-20211207080200-4aff01c85684
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
-	github.com/rogpeppe/go-internal v1.8.0 // indirect
-	golang.org/x/exp v0.0.0-20211207001050-4f2595aad9e7 // indirect
-	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
+	github.com/rogpeppe/go-internal v1.8.1 // indirect
+	golang.org/x/exp v0.0.0-20211221223016-e29036178569 // indirect
+	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 )
 
 require (
