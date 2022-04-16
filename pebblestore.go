@@ -29,9 +29,8 @@ type Store struct {
 	c  io.Closer
 }
 
-// Opener constructs a filestore from an address comprising a path, for use
-// with the store package. If addr has the form name@path, the name is used as
-// the bucket label.
+// Opener constructs a store backed by PebbleDB from an address comprising a
+// path, for use with the store package.
 func Opener(_ context.Context, addr string) (blob.Store, error) {
 	return Open(addr, nil)
 }
