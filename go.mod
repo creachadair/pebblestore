@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/cockroachdb/errors v1.9.0 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20220805222512-eb306b9cf882
+	github.com/cockroachdb/pebble v0.0.0-20220809135203-cb25d247e7c2
 	github.com/cockroachdb/redact v1.1.3 // indirect
 	github.com/creachadair/ffs v0.0.0-20220803151334-8447b592c9f2
 	github.com/klauspost/compress v1.15.9 // indirect
