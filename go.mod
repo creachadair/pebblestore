@@ -7,11 +7,11 @@ require (
 	github.com/cockroachdb/errors v1.9.0 // indirect
 	github.com/cockroachdb/pebble v0.0.0-20221021145029-f34af25a0187
 	github.com/cockroachdb/redact v1.1.3 // indirect
-	github.com/creachadair/ffs v0.0.0-20221021172941-afb16f61a95c
-	github.com/klauspost/compress v1.15.11 // indirect
+	github.com/creachadair/ffs v0.0.0-20221025155405-c79ce5dc40af
+	github.com/klauspost/compress v1.15.12 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
-	golang.org/x/exp v0.0.0-20221025133541-111beb427cde // indirect
+	golang.org/x/exp v0.0.0-20221026004748-78e5e7837ae6 // indirect
 	golang.org/x/sys v0.1.0 // indirect
 )
 
