@@ -74,8 +74,8 @@ github.com/cockroachdb/errors v1.9.0/go.mod h1:vaNcEYYqbIqB5JhKBhFV9CneUqeuEbB2O
 github.com/cockroachdb/logtags v0.0.0-20190617123548-eb05cc24525f/go.mod h1:i/u985jwjWRlyHXQbwatDASoW0RMlZ/3i9yJHE2xLkI=
 github.com/cockroachdb/logtags v0.0.0-20211118104740-dabe8e521a4f h1:6jduT9Hfc0njg5jJ1DdKCFPdMBrp/mdZfCpa5h+WM74=
 github.com/cockroachdb/logtags v0.0.0-20211118104740-dabe8e521a4f/go.mod h1:Vz9DsVWQQhf3vs21MhPMZpMGSht7O/2vFW2xusFUVOs=
-github.com/cockroachdb/pebble v0.0.0-20221122204154-936e011bb911 h1:DgASk5q0ER4TW8utcptn1ZP49lLjSkwYH6MTi99Jfhc=
-github.com/cockroachdb/pebble v0.0.0-20221122204154-936e011bb911/go.mod h1:qf9bLis2yy1XyNYD01wvIHPabuC1STzQsvGibYVsom4=
+github.com/cockroachdb/pebble v0.0.0-20221201221027-a08baf44335e h1:peGjaoLFEnkO5sd9G0xhjxPo+BcoQ/H/LpXjRAQl6YQ=
+github.com/cockroachdb/pebble v0.0.0-20221201221027-a08baf44335e/go.mod h1:qf9bLis2yy1XyNYD01wvIHPabuC1STzQsvGibYVsom4=
 github.com/cockroachdb/redact v1.1.3 h1:AKZds10rFSIj7qADf0g46UixK8NNLwWTNdCIGS5wfSQ=
 github.com/cockroachdb/redact v1.1.3/go.mod h1:BVNblN9mBWFyMyqK1k3AAiSxhvhfK2oOZZ2lK+dpvRg=
 github.com/cockroachdb/sentry-go v0.6.1-cockroachdb.2/go.mod h1:8BT+cPK6xvFOcRlk0R8eg+OTkcqI6baNH4xAkpiYVvQ=
@@ -84,8 +84,8 @@ github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
 github.com/cpuguy83/go-md2man v1.0.10/go.mod h1:SmD6nW6nTyfqj6ABTjUi3V3JVMnlJmwcJI5acqYI6dE=
-github.com/creachadair/ffs v0.0.0-20221118160344-cda956c7a60c h1:uhBtXcpW/inFq3VSB9gkZwew3F2aAohaM1tB0sTL/6A=
-github.com/creachadair/ffs v0.0.0-20221118160344-cda956c7a60c/go.mod h1:tVNdl7pW0/rOqtX4USNfZUqCWlPwRwSqIK7lpr19r0s=
+github.com/creachadair/ffs v0.0.0-20221128170207-5708b8698463 h1:yzq0kgSLOQL+6FSh6//h9xpTKvEFZr2iK3jcYgM4Z2c=
+github.com/creachadair/ffs v0.0.0-20221128170207-5708b8698463/go.mod h1:F76celEFzLiLYBmFFyLwQMmMbqdh+FlaIlrT0qpLbCw=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
