@@ -105,13 +105,16 @@ func (s *Store) Delete(ctx context.Context, key string) error {
 }
 
 // List implements part of blob.Store.
-func (s *Store) List(_ context.Context, start string, f func(string) error) error {
+func (s *Store) List(ctx context.Context, start string, f func(string) error) error {
 	it := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte(start)})
 	for it.First(); it.Valid(); it.Next() {
 		err := f(string(it.Key()))
 		if err == blob.ErrStopListing {
 			break
 		} else if err != nil {
+			it.Close()
+			return err
+		} else if err := ctx.Err(); err != nil {
 			it.Close()
 			return err
 		}
