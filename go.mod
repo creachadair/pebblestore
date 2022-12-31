@@ -7,7 +7,7 @@ require (
 	github.com/cockroachdb/errors v1.9.0 // indirect
 	github.com/cockroachdb/pebble v0.0.0-20221229212011-811a8c0e741b
 	github.com/cockroachdb/redact v1.1.3 // indirect
-	github.com/creachadair/ffs v0.0.0-20221230182434-26e606bfa99c
+	github.com/creachadair/ffs v0.0.0-20221231175928-c881536abce3
 	github.com/klauspost/compress v1.15.13 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
