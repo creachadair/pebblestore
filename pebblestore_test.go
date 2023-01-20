@@ -15,6 +15,7 @@
 package pebblestore_test
 
 import (
+	"context"
 	"flag"
 	"os"
 	"testing"
@@ -40,7 +41,7 @@ func TestStore(t *testing.T) {
 		t.Fatalf("Creating store at %q: %v", dir, err)
 	}
 	storetest.Run(t, s)
-	if err := s.Close(); err != nil {
+	if err := s.Close(context.Background()); err != nil {
 		t.Errorf("Closing store: %v", err)
 	}
 }

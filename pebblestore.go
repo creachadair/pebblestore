@@ -51,9 +51,9 @@ type nopCloser struct{}
 
 func (nopCloser) Close() error { return nil }
 
-// Close implements the io.Closer interface. It closes the underlying database
-// instance and reports its result.
-func (s *Store) Close() error {
+// Close implements part of the blob.Store interface. It closes the underlying
+// database instance and reports its result.
+func (s *Store) Close(_ context.Context) error {
 	cerr := s.c.Close()
 	s.c = nopCloser{}
 	return cerr
