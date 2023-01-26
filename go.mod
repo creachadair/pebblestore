@@ -4,14 +4,14 @@ go 1.18
 
 require (
 	github.com/DataDog/zstd v1.5.2 // indirect
-	github.com/cockroachdb/errors v1.9.0 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20230119164258-f05f4ef166f3
+	github.com/cockroachdb/errors v1.9.1 // indirect
+	github.com/cockroachdb/pebble v0.0.0-20230125164852-169e5dbe9992
 	github.com/cockroachdb/redact v1.1.3 // indirect
-	github.com/creachadair/ffs v0.0.0-20230120030721-f875fe903469
-	github.com/klauspost/compress v1.15.14 // indirect
+	github.com/creachadair/ffs v0.0.0-20230123205934-71e1e411e7bd
+	github.com/klauspost/compress v1.15.15 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
-	golang.org/x/exp v0.0.0-20230118134722-a68e582fa157 // indirect
+	golang.org/x/exp v0.0.0-20230125214544-b3c2aaf6208d // indirect
 	golang.org/x/sys v0.4.0 // indirect
 )
 
@@ -19,7 +19,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
-	github.com/creachadair/mds v0.0.0-20230115232940-050e69c560e9 // indirect
+	github.com/creachadair/mds v0.0.0-20230121043849-c7d6542927f1 // indirect
 	github.com/getsentry/sentry-go v0.17.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
