@@ -59,16 +59,23 @@ func (s *Store) Close(_ context.Context) error {
 	return cerr
 }
 
-// Get implements part of blob.Store.
-func (s *Store) Get(_ context.Context, key string) (data []byte, err error) {
+func (s *Store) getRaw(key string) ([]byte, io.Closer, error) {
 	val, c, err := s.db.Get([]byte(key))
 	if err == pebble.ErrNotFound {
-		return nil, blob.KeyNotFound(key)
+		return nil, nil, blob.KeyNotFound(key)
 	} else if err != nil {
+		return nil, nil, err
+	}
+	return val, c, nil
+}
+
+// Get implements part of blob.Store.
+func (s *Store) Get(_ context.Context, key string) (data []byte, err error) {
+	val, c, err := s.getRaw(key)
+	if err != nil {
 		return nil, err
 	}
-	data = make([]byte, len(val))
-	copy(data, val)
+	data = append([]byte{}, val...)
 	c.Close() // required; invalidates val
 	return data, nil
 }
@@ -88,19 +95,23 @@ func (s *Store) Put(_ context.Context, opts blob.PutOptions) error {
 }
 
 // Size implements part of blob.Store.
-func (s *Store) Size(ctx context.Context, key string) (size int64, err error) {
-	data, err := s.Get(ctx, key)
+func (s *Store) Size(_ context.Context, key string) (size int64, err error) {
+	val, c, err := s.getRaw(key)
 	if err != nil {
 		return 0, err
 	}
-	return int64(len(data)), nil
+	size = int64(len(val))
+	c.Close()
+	return size, nil
 }
 
 // Delete implements part of blob.Store.
 func (s *Store) Delete(ctx context.Context, key string) error {
-	if _, err := s.Get(ctx, key); err != nil {
+	_, c, err := s.getRaw(key)
+	if err != nil {
 		return err
 	}
+	c.Close()
 	return s.db.Delete([]byte(key), pebble.Sync)
 }
 
