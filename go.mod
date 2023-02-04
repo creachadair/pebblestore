@@ -5,13 +5,13 @@ go 1.18
 require (
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/cockroachdb/errors v1.9.1 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20230130182308-341e8b5e9527
+	github.com/cockroachdb/pebble v0.0.0-20230203182935-f2e58dc4a0e1
 	github.com/cockroachdb/redact v1.1.3 // indirect
-	github.com/creachadair/ffs v0.0.0-20230129190020-edf9315ecc3b
+	github.com/creachadair/ffs v0.0.0-20230204022207-569f8f4cdd9e
 	github.com/klauspost/compress v1.15.15 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
-	golang.org/x/exp v0.0.0-20230131120322-dfa7d7a641b0 // indirect
+	golang.org/x/exp v0.0.0-20230203172020-98cc5a0785f9 // indirect
 	golang.org/x/sys v0.4.0 // indirect
 )
 
