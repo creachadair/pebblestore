@@ -94,17 +94,6 @@ func (s *Store) Put(_ context.Context, opts blob.PutOptions) error {
 	return s.db.Set(key, opts.Data, pebble.Sync)
 }
 
-// Size implements part of blob.Store.
-func (s *Store) Size(_ context.Context, key string) (size int64, err error) {
-	val, c, err := s.getRaw(key)
-	if err != nil {
-		return 0, err
-	}
-	size = int64(len(val))
-	c.Close()
-	return size, nil
-}
-
 // Delete implements part of blob.Store.
 func (s *Store) Delete(ctx context.Context, key string) error {
 	_, c, err := s.getRaw(key)
