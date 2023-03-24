@@ -5,13 +5,13 @@ go 1.19
 require (
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/cockroachdb/errors v1.9.1 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20230315223031-1e5ddd10389e
+	github.com/cockroachdb/pebble v0.0.0-20230321221706-c24246ffc012
 	github.com/cockroachdb/redact v1.1.3 // indirect
-	github.com/creachadair/ffs v0.0.0-20230314213740-1655997c2914
+	github.com/creachadair/ffs v0.0.0-20230321183314-02aaf775b436
 	github.com/klauspost/compress v1.16.3 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
-	golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0 // indirect
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 )
 
@@ -19,7 +19,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
-	github.com/creachadair/mds v0.0.0-20230313153906-9788b6f60568 // indirect
+	github.com/creachadair/mds v0.0.0-20230321183227-bb0bfa375235 // indirect
 	github.com/getsentry/sentry-go v0.19.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
