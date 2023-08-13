@@ -1,6 +1,6 @@
 module github.com/creachadair/pebblestore
 
-go 1.19
+go 1.20
 
 require (
 	github.com/DataDog/zstd v1.5.5 // indirect
