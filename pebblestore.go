@@ -106,7 +106,10 @@ func (s *Store) Delete(ctx context.Context, key string) error {
 
 // List implements part of blob.Store.
 func (s *Store) List(ctx context.Context, start string, f func(string) error) error {
-	it := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte(start)})
+	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte(start)})
+	if err != nil {
+		return err
+	}
 	for it.First(); it.Valid(); it.Next() {
 		err := f(string(it.Key()))
 		if err == blob.ErrStopListing {
@@ -124,7 +127,10 @@ func (s *Store) List(ctx context.Context, start string, f func(string) error) er
 
 // Len implements part of blob.Store.
 func (s *Store) Len(ctx context.Context) (int64, error) {
-	it := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte("")})
+	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte("")})
+	if err != nil {
+		return 0, err
+	}
 	var count int64
 	for it.First(); it.Valid(); it.Next() {
 		count++
