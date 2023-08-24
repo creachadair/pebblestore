@@ -7,7 +7,7 @@ toolchain go1.21.0
 require (
 	github.com/DataDog/zstd v1.5.5 // indirect
 	github.com/cockroachdb/errors v1.10.0 // indirect
-	github.com/cockroachdb/pebble v0.0.0-20230819001538-1798fbf5956c
+	github.com/cockroachdb/pebble v0.0.0-20230823182331-8638640b0dcb
 	github.com/cockroachdb/redact v1.1.5 // indirect
 	github.com/creachadair/ffs v0.0.2
 	github.com/klauspost/compress v1.16.7 // indirect
