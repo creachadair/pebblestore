@@ -9,7 +9,7 @@ require (
 	github.com/cockroachdb/errors v1.11.3 // indirect
 	github.com/cockroachdb/pebble v1.1.2
 	github.com/cockroachdb/redact v1.1.5 // indirect
-	github.com/creachadair/ffs v0.6.6
+	github.com/creachadair/ffs v0.6.8
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
@@ -23,7 +23,7 @@ require (
 	github.com/cockroachdb/fifo v0.0.0-20240816210425-c5d0cb0b6fc0 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
 	github.com/cockroachdb/tokenbucket v0.0.0-20230807174530-cc333fc44b06 // indirect
-	github.com/creachadair/mds v0.21.4 // indirect
+	github.com/creachadair/mds v0.22.0 // indirect
 	github.com/getsentry/sentry-go v0.29.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
