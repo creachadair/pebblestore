@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package pebblestore implements the blob.Store interface using Pebble.
+// Package pebblestore implements the [blob.KV] interface using Pebble.
 package pebblestore
 
 import (
@@ -23,25 +23,25 @@ import (
 	"github.com/creachadair/ffs/blob"
 )
 
-// Store implements the blob.Store interface using a Pebble database.
-type Store struct {
+// KV implements the [blob.KV] interface using a Pebble database.
+type KV struct {
 	db *pebble.DB
 	c  io.Closer
 }
 
 // Opener constructs a store backed by PebbleDB from an address comprising a
 // path, for use with the store package.
-func Opener(_ context.Context, addr string) (blob.Store, error) {
+func Opener(_ context.Context, addr string) (blob.KV, error) {
 	return Open(addr, nil)
 }
 
-// Open creates a Store by opening the Pebble database specified by opts.
-func Open(path string, opts *Options) (*Store, error) {
+// Open creates a [KV] by opening the Pebble database specified by opts.
+func Open(path string, opts *Options) (*KV, error) {
 	db, err := pebble.Open(path, &pebble.Options{})
 	if err != nil {
 		return nil, err
 	}
-	return &Store{db: db, c: db}, nil
+	return &KV{db: db, c: db}, nil
 }
 
 // Options provides options for opening a Pebble database.
@@ -51,15 +51,15 @@ type nopCloser struct{}
 
 func (nopCloser) Close() error { return nil }
 
-// Close implements part of the blob.Store interface. It closes the underlying
+// Close implements part of the [blob.KV] interface. It closes the underlying
 // database instance and reports its result.
-func (s *Store) Close(_ context.Context) error {
+func (s *KV) Close(_ context.Context) error {
 	cerr := s.c.Close()
 	s.c = nopCloser{}
 	return cerr
 }
 
-func (s *Store) getRaw(key string) ([]byte, io.Closer, error) {
+func (s *KV) getRaw(key string) ([]byte, io.Closer, error) {
 	val, c, err := s.db.Get([]byte(key))
 	if err == pebble.ErrNotFound {
 		return nil, nil, blob.KeyNotFound(key)
@@ -69,8 +69,8 @@ func (s *Store) getRaw(key string) ([]byte, io.Closer, error) {
 	return val, c, nil
 }
 
-// Get implements part of blob.Store.
-func (s *Store) Get(_ context.Context, key string) (data []byte, err error) {
+// Get implements part of [blob.KV].
+func (s *KV) Get(_ context.Context, key string) (data []byte, err error) {
 	val, c, err := s.getRaw(key)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (s *Store) Get(_ context.Context, key string) (data []byte, err error) {
 	return data, nil
 }
 
-// Put implements part of blob.Store.
-func (s *Store) Put(_ context.Context, opts blob.PutOptions) error {
+// Put implements part of [blob.KV].
+func (s *KV) Put(_ context.Context, opts blob.PutOptions) error {
 	key := []byte(opts.Key)
 	if !opts.Replace {
 		_, c, err := s.db.Get(key)
@@ -94,8 +94,8 @@ func (s *Store) Put(_ context.Context, opts blob.PutOptions) error {
 	return s.db.Set(key, opts.Data, pebble.Sync)
 }
 
-// Delete implements part of blob.Store.
-func (s *Store) Delete(ctx context.Context, key string) error {
+// Delete implements part of [blob.KV].
+func (s *KV) Delete(ctx context.Context, key string) error {
 	_, c, err := s.getRaw(key)
 	if err != nil {
 		return err
@@ -104,8 +104,8 @@ func (s *Store) Delete(ctx context.Context, key string) error {
 	return s.db.Delete([]byte(key), pebble.Sync)
 }
 
-// List implements part of blob.Store.
-func (s *Store) List(ctx context.Context, start string, f func(string) error) error {
+// List implements part of [blob.KV].
+func (s *KV) List(ctx context.Context, start string, f func(string) error) error {
 	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte(start)})
 	if err != nil {
 		return err
@@ -125,8 +125,8 @@ func (s *Store) List(ctx context.Context, start string, f func(string) error) er
 	return it.Close()
 }
 
-// Len implements part of blob.Store.
-func (s *Store) Len(ctx context.Context) (int64, error) {
+// Len implements part of [blob.KV].
+func (s *KV) Len(ctx context.Context) (int64, error) {
 	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte("")})
 	if err != nil {
 		return 0, err

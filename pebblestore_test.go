@@ -26,7 +26,7 @@ import (
 
 var keepOutput = flag.Bool("keep", false, "Keep test output after running")
 
-func TestStore(t *testing.T) {
+func TestKV(t *testing.T) {
 	dir, err := os.MkdirTemp("", "pebbletest")
 	if err != nil {
 		t.Fatalf("Creating temp directory: %v", err)
