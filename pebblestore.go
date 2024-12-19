@@ -12,56 +12,74 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package pebblestore implements the [blob.KV] interface using Pebble.
+// Package pebblestore implements the [blob.StoreCloser] interface on Pebble.
 package pebblestore
 
 import (
+	"bytes"
 	"context"
+	"errors"
+	"fmt"
 	"io"
 
 	"github.com/cockroachdb/pebble"
 	"github.com/creachadair/ffs/blob"
+	"github.com/creachadair/ffs/storage/dbkey"
+	"github.com/creachadair/ffs/storage/monitor"
 )
-
-// KV implements the [blob.KV] interface using a Pebble database.
-type KV struct {
-	db *pebble.DB
-	c  io.Closer
-}
 
 // Opener constructs a store backed by PebbleDB from an address comprising a
 // path, for use with the store package.
-func Opener(_ context.Context, addr string) (blob.KV, error) {
+func Opener(_ context.Context, addr string) (blob.StoreCloser, error) {
 	return Open(addr, nil)
 }
 
 // Open creates a [KV] by opening the Pebble database specified by opts.
-func Open(path string, opts *Options) (*KV, error) {
+func Open(path string, opts *Options) (Store, error) {
 	db, err := pebble.Open(path, &pebble.Options{})
 	if err != nil {
-		return nil, err
+		return Store{}, err
 	}
-	return &KV{db: db, c: db}, nil
+	return Store{M: monitor.New(db, "", func(c monitor.Config[*pebble.DB]) KV {
+		return KV{db: c.DB, prefix: c.Prefix}
+	})}, nil
+}
+
+// Store implements the [blob.StoreCloser] interface using PebbleDB.
+type Store struct {
+	*monitor.M[*pebble.DB, KV]
+}
+
+// Close implements part of the [blob.StoreCloser] interface.
+func (s Store) Close(context.Context) (err error) {
+	// Pebble has this silly behaviour where closing it a second time panics
+	// instead of reporting an error. This is uncivilized, so handle the panic
+	// and turn it into an error. If Pebble ever changes the error text this
+	// will stop working, but at least it will report an error rather than
+	// blowing up the whole program.
+	defer func() {
+		x := recover()
+		if e, ok := x.(error); ok && e.Error() == "pebble: closed" {
+			return // ok, fine, be that way
+		} else if x != nil {
+			err = fmt.Errorf("panic during close (recovered): %v", x)
+		}
+	}()
+	return s.DB.Close()
 }
 
 // Options provides options for opening a Pebble database.
 type Options struct{}
 
-type nopCloser struct{}
-
-func (nopCloser) Close() error { return nil }
-
-// Close implements part of the [blob.KV] interface. It closes the underlying
-// database instance and reports its result.
-func (s *KV) Close(_ context.Context) error {
-	cerr := s.c.Close()
-	s.c = nopCloser{}
-	return cerr
+// KV implements the [blob.KV] interface using a Pebble database.
+type KV struct {
+	db     *pebble.DB
+	prefix dbkey.Prefix
 }
 
-func (s *KV) getRaw(key string) ([]byte, io.Closer, error) {
-	val, c, err := s.db.Get([]byte(key))
-	if err == pebble.ErrNotFound {
+func (s KV) getRaw(key string) ([]byte, io.Closer, error) {
+	val, c, err := s.db.Get([]byte(s.prefix.Add(key)))
+	if errors.Is(err, pebble.ErrNotFound) {
 		return nil, nil, blob.KeyNotFound(key)
 	} else if err != nil {
 		return nil, nil, err
@@ -70,7 +88,7 @@ func (s *KV) getRaw(key string) ([]byte, io.Closer, error) {
 }
 
 // Get implements part of [blob.KV].
-func (s *KV) Get(_ context.Context, key string) (data []byte, err error) {
+func (s KV) Get(_ context.Context, key string) (data []byte, err error) {
 	val, c, err := s.getRaw(key)
 	if err != nil {
 		return nil, err
@@ -81,8 +99,8 @@ func (s *KV) Get(_ context.Context, key string) (data []byte, err error) {
 }
 
 // Put implements part of [blob.KV].
-func (s *KV) Put(_ context.Context, opts blob.PutOptions) error {
-	key := []byte(opts.Key)
+func (s KV) Put(_ context.Context, opts blob.PutOptions) error {
+	key := []byte(s.prefix.Add(opts.Key))
 	if !opts.Replace {
 		_, c, err := s.db.Get(key)
 		if err == nil {
@@ -95,29 +113,35 @@ func (s *KV) Put(_ context.Context, opts blob.PutOptions) error {
 }
 
 // Delete implements part of [blob.KV].
-func (s *KV) Delete(ctx context.Context, key string) error {
+func (s KV) Delete(ctx context.Context, key string) error {
 	_, c, err := s.getRaw(key)
 	if err != nil {
 		return err
 	}
 	c.Close()
-	return s.db.Delete([]byte(key), pebble.Sync)
+	return s.db.Delete([]byte(s.prefix.Add(key)), pebble.Sync)
 }
 
 // List implements part of [blob.KV].
-func (s *KV) List(ctx context.Context, start string, f func(string) error) error {
-	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte(start)})
+func (s KV) List(ctx context.Context, start string, f func(string) error) error {
+	bstart := []byte(s.prefix.Add(start))
+	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: bstart})
 	if err != nil {
 		return err
 	}
 	for it.First(); it.Valid(); it.Next() {
-		err := f(string(it.Key()))
-		if err == blob.ErrStopListing {
+		if !bytes.HasPrefix(it.Key(), []byte(s.prefix)) {
+			break
+		}
+		err := f(s.prefix.Remove(string(it.Key())))
+		if errors.Is(err, blob.ErrStopListing) {
 			break
 		} else if err != nil {
 			it.Close()
 			return err
-		} else if err := ctx.Err(); err != nil {
+		}
+
+		if err := ctx.Err(); err != nil {
 			it.Close()
 			return err
 		}
@@ -126,13 +150,16 @@ func (s *KV) List(ctx context.Context, start string, f func(string) error) error
 }
 
 // Len implements part of [blob.KV].
-func (s *KV) Len(ctx context.Context) (int64, error) {
-	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte("")})
+func (s KV) Len(ctx context.Context) (int64, error) {
+	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: []byte(s.prefix)})
 	if err != nil {
 		return 0, err
 	}
 	var count int64
 	for it.First(); it.Valid(); it.Next() {
+		if !bytes.HasPrefix(it.Key(), []byte(s.prefix)) {
+			break
+		}
 		count++
 	}
 	return count, it.Close()
