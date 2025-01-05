@@ -21,6 +21,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"iter"
 
 	"github.com/cockroachdb/pebble"
 	"github.com/creachadair/ffs/blob"
@@ -142,30 +143,31 @@ func (s KV) Delete(ctx context.Context, key string) error {
 }
 
 // List implements part of [blob.KV].
-func (s KV) List(ctx context.Context, start string, f func(string) error) error {
-	bstart := []byte(s.prefix.Add(start))
-	it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: bstart})
-	if err != nil {
-		return err
+func (s KV) List(ctx context.Context, start string) iter.Seq2[string, error] {
+	return func(yield func(string, error) bool) {
+		bstart := []byte(s.prefix.Add(start))
+		it, err := s.db.NewIter(&pebble.IterOptions{LowerBound: bstart})
+		if err != nil {
+			yield("", err)
+			return
+		}
+		for it.First(); it.Valid(); it.Next() {
+			if err := ctx.Err(); err != nil {
+				it.Close()
+				yield("", err)
+				return
+			}
+			if !bytes.HasPrefix(it.Key(), []byte(s.prefix)) {
+				break
+			}
+			if !yield(s.prefix.Remove(string(it.Key())), nil) {
+				break
+			}
+		}
+		if err := it.Close(); err != nil {
+			yield("", err)
+		}
 	}
-	for it.First(); it.Valid(); it.Next() {
-		if !bytes.HasPrefix(it.Key(), []byte(s.prefix)) {
-			break
-		}
-		err := f(s.prefix.Remove(string(it.Key())))
-		if errors.Is(err, blob.ErrStopListing) {
-			break
-		} else if err != nil {
-			it.Close()
-			return err
-		}
-
-		if err := ctx.Err(); err != nil {
-			it.Close()
-			return err
-		}
-	}
-	return it.Close()
 }
 
 // Len implements part of [blob.KV].
