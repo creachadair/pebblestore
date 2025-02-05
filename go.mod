@@ -7,14 +7,14 @@ toolchain go1.23.1
 require (
 	github.com/DataDog/zstd v1.5.6 // indirect
 	github.com/cockroachdb/errors v1.11.3 // indirect
-	github.com/cockroachdb/pebble v1.1.3
-	github.com/cockroachdb/redact v1.1.5 // indirect
-	github.com/creachadair/ffs v0.12.4
+	github.com/cockroachdb/pebble v1.1.4
+	github.com/cockroachdb/redact v1.1.6 // indirect
+	github.com/creachadair/ffs v0.12.11
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
-	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
-	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/exp v0.0.0-20250128182459-e0ece0dbea4c // indirect
+	golang.org/x/sys v0.30.0 // indirect
 )
 
 require (
@@ -36,6 +36,6 @@ require (
 	github.com/prometheus/common v0.62.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	golang.org/x/crypto v0.32.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
-	google.golang.org/protobuf v1.36.3 // indirect
+	golang.org/x/text v0.22.0 // indirect
+	google.golang.org/protobuf v1.36.4 // indirect
 )
