@@ -2,8 +2,6 @@ module github.com/creachadair/pebblestore
 
 go 1.24
 
-toolchain go1.24.1
-
 require (
 	github.com/DataDog/zstd v1.5.7 // indirect
 	github.com/cockroachdb/errors v1.11.3 // indirect
