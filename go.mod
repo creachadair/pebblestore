@@ -6,13 +6,13 @@ require (
 	github.com/DataDog/zstd v1.5.7 // indirect
 	github.com/cockroachdb/errors v1.12.0 // indirect
 	github.com/cockroachdb/pebble v1.1.5
-	github.com/cockroachdb/redact v1.1.6 // indirect
-	github.com/creachadair/ffs v0.17.4
-	github.com/klauspost/compress v1.18.4 // indirect
+	github.com/cockroachdb/redact v1.1.8 // indirect
+	github.com/creachadair/ffs v0.17.6
+	github.com/klauspost/compress v1.18.5 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
-	golang.org/x/exp v0.0.0-20260218203240-3dfff04db8fa // indirect
-	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90 // indirect
+	golang.org/x/sys v0.42.0 // indirect
 )
 
 require (
@@ -33,8 +33,8 @@ require (
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.67.5 // indirect
 	github.com/prometheus/procfs v0.20.1 // indirect
-	go.yaml.in/yaml/v2 v2.4.3 // indirect
-	golang.org/x/crypto v0.48.0 // indirect
-	golang.org/x/text v0.34.0 // indirect
+	go.yaml.in/yaml/v2 v2.4.4 // indirect
+	golang.org/x/crypto v0.49.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
