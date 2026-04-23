@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/cockroachdb/pebble v1.1.5
-	github.com/creachadair/ffs v0.17.7
+	github.com/creachadair/ffs v0.17.9
 )
 
 require (
@@ -34,7 +34,7 @@ require (
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	golang.org/x/crypto v0.49.0 // indirect
 	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90 // indirect
-	golang.org/x/sys v0.42.0 // indirect
+	golang.org/x/sys v0.43.0 // indirect
 	golang.org/x/text v0.35.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
