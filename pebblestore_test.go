@@ -18,6 +18,7 @@ import (
 	"context"
 	"flag"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/creachadair/ffs/blob/storetest"
@@ -44,4 +45,17 @@ func TestKV(t *testing.T) {
 	if err := s.Close(context.Background()); err != nil {
 		t.Errorf("Closing store: %v", err)
 	}
+}
+
+func BenchmarkStore(b *testing.B) {
+	path := filepath.Join(b.TempDir(), "benchmark.db")
+	s, err := pebblestore.Open(path, nil)
+	if err != nil {
+		b.Fatal(err)
+	}
+	kv, err := s.KV(b.Context(), "benchmark")
+	if err != nil {
+		b.Fatalf("KV: %v", err)
+	}
+	storetest.BenchmarkKV(b, kv)
 }
