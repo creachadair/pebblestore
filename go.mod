@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/cockroachdb/pebble v1.1.5
-	github.com/creachadair/ffs v0.17.13
+	github.com/creachadair/ffs v0.17.14
 )
 
 require (
